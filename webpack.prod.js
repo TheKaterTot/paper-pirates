@@ -4,23 +4,23 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-
         options: {
-          presets: ["env"]
+          presets: ["env", "react"]
         }
       }
     ]
   },
-
+  resolve: {
+    extensions: [".js", ".jsx"]
+  },
   plugins: [],
-  entry: path.resolve(__dirname, "client/index.js"),
+  entry: path.resolve(__dirname, "client/index.jsx"),
   output: {
     filename: "index.bundle.js",
     path: path.resolve(__dirname, "public/js")
   },
-
-  mode: "production"
+  mode: "development"
 };
