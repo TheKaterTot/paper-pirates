@@ -15,7 +15,6 @@ class Stage extends Component {
   }
 
   render() {
-    console.log("YO! I'm a stage!", this.props.children);
     return (
       <PixiContext.Provider value={{ parent: this.application.stage }}>
         <div ref={this.onRef}>{this.props.children}</div>

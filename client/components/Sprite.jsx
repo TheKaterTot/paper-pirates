@@ -16,13 +16,23 @@ class Sprite extends Component {
     this.pixiSprite.scale.set(scale);
   }
 
+  componentDidUpdate() {
+    const { x, y, scale } = this.props;
+
+    this.pixiSprite.x = x;
+    this.pixiSprite.y = y;
+    this.pixiSprite.scale.set(scale);
+  }
+
   componentDidMount() {
     const { parent } = this.props;
+
     parent.addChild(this.pixiSprite);
   }
 
   componentWillUnmount() {
     const { parent } = this.props;
+
     parent.removeChild(this.pixiSprite);
   }
 
