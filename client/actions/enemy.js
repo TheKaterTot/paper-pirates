@@ -73,7 +73,7 @@ export const enemiesFire = () => (dispatch, getState) => {
   const { enemies } = getState();
 
   _.each(enemies, enemy => {
-    const roll = _.random(2500);
+    const roll = _.random(4000);
 
     if (roll <= 20) {
       dispatch({ type: "ENEMYFIRE", payload: enemy });

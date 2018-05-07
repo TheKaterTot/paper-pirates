@@ -27,6 +27,8 @@ export default (state = defaultState, action) => {
       });
     case "REMOVEENEMYMISSILE":
       return _.filter(state, m => m.id !== action.payload.id);
+    case "GAMESTART":
+      return defaultState;
     default:
       return state;
   }

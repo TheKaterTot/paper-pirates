@@ -23,6 +23,8 @@ export default (state = defaultState, action) => {
       return removeEnemy(state, action.payload);
     case "UPDATEENEMIES":
       return updateEnemies(state);
+    case "GAMESTART":
+      return defaultState;
     default:
       return state;
   }

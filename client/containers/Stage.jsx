@@ -18,8 +18,9 @@ class Stage extends Component {
     this.onRef = this.onRef.bind(this);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.application.renderer.resize(this.props.width, this.props.height);
+    this.application.renderer.backgroundColor = this.props.backgroundColor;
   }
 
   render() {

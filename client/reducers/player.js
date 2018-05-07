@@ -119,6 +119,8 @@ const reducer = (state = defaultState, action) => {
       return keypress(state, action.payload.key);
     case "INCREMENTSCORE":
       return { ...state, score: state.score + action.payload.count };
+    case "GAMESTART":
+      return defaultState;
     default:
       return state;
   }

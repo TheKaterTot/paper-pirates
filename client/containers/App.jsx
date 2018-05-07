@@ -27,6 +27,7 @@ import Stage from "./Stage";
 import Sprite from "../components/Sprite";
 import KeyboardEvents from "./KeyboardEvents";
 import Score from "../components/Score";
+import Text from "../components/Text";
 
 import {
   gameBackgroundColor,
@@ -49,32 +50,76 @@ class App extends Component {
   }
 
   render() {
-    const { player, screen } = this.props;
-    const { position } = player;
+    const { screen } = this.props;
 
     return (
       <Loop onTick={this.onTick}>
         <KeyboardEvents onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp}>
-          <Stage
-            backgroundColor={gameBackgroundColor}
-            width={screen.width}
-            height={screen.height}
-          >
-            <Sprite
-              width={playerWidth}
-              height={playerHeight}
-              x={position.x}
-              y={position.y}
-              filename={"player.png"}
-            />
-
-            {this.enemies}
-            {this.playerMissiles}
-            {this.enemyMissiles}
-            <Score score={player.score} />
-          </Stage>
+          {this.currentScene}
         </KeyboardEvents>
       </Loop>
+    );
+  }
+
+  get currentScene() {
+    const { game } = this.props;
+    switch (game.state) {
+      case "playing":
+        return this.playingScene;
+      case "gameover":
+        return this.gameoverScene;
+      default:
+        return null;
+    }
+  }
+
+  get gameoverScene() {
+    const { screen } = this.props;
+
+    return (
+      <Stage
+        backgroundColor={0x000000}
+        width={screen.width}
+        height={screen.height}
+      >
+        <Text
+          text={"Game Over\nPress Enter to Start Over"}
+          x={screen.width / 2}
+          y={screen.height / 2}
+          style={{
+            fill: 0xffffff,
+            stroke: 0xffffff,
+            fontSize: "56pt",
+            align: "center"
+          }}
+        />
+      </Stage>
+    );
+  }
+
+  get playingScene() {
+    const { player, screen } = this.props;
+    const { position } = player;
+
+    return (
+      <Stage
+        backgroundColor={gameBackgroundColor}
+        width={screen.width}
+        height={screen.height}
+      >
+        <Sprite
+          key={"player"}
+          width={playerWidth}
+          height={playerHeight}
+          x={position.x}
+          y={position.y}
+          filename={"player.png"}
+        />
+        {this.enemies}
+        {this.playerMissiles}
+        {this.enemyMissiles}
+        <Score key={"score"} score={player.score} />
+      </Stage>
     );
   }
 
@@ -118,7 +163,7 @@ class App extends Component {
     return _.map(this.props.enemies, (enemy, i) => {
       return (
         <Sprite
-          key={i}
+          key={enemy.id}
           width={enemyWidth}
           height={enemyHeight}
           x={enemy.x}
@@ -138,6 +183,11 @@ class App extends Component {
   };
 
   onTick = () => {
+    const { game } = this.props;
+    if (game.state !== "playing") {
+      return;
+    }
+
     this.props.movePlayer();
     this.props.updateEnemies();
     this.props.updateMissiles();
@@ -199,12 +249,14 @@ const mapStateToProps = ({
   player,
   pixi: { screen },
   enemies,
-  enemyMissiles
+  enemyMissiles,
+  game
 }) => ({
   player,
   screen,
   enemies,
-  enemyMissiles
+  enemyMissiles,
+  game
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
