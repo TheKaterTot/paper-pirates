@@ -4,6 +4,7 @@ import App from "./containers/App";
 import PlayerReducer from "./reducers/player";
 import PixiReducer from "./reducers/pixi";
 import EnemiesReducer from "./reducers/enemies";
+import EnemiesMissilesReducer from "./reducers/enemyMissiles";
 
 import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware } from "redux";
@@ -13,7 +14,8 @@ const store = createStore(
   combineReducers({
     player: PlayerReducer,
     pixi: PixiReducer,
-    enemies: EnemiesReducer
+    enemies: EnemiesReducer,
+    enemyMissiles: EnemiesMissilesReducer
   }),
   applyMiddleware(Thunk)
 );

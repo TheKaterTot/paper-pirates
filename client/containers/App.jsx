@@ -16,7 +16,10 @@ import {
   placeInitialEnemies,
   updateEnemies,
   removeOffScreenEnemies,
-  checkEnemyMissileColisions
+  checkEnemyMissileColisions,
+  enemiesFire,
+  enemyMissilesMove,
+  removeOffScreenEnemyMissiles
 } from "../actions/enemy";
 
 import Loop from "./Loop";
@@ -67,6 +70,7 @@ class App extends Component {
 
             {this.enemies}
             {this.playerMissiles}
+            {this.enemyMissiles}
             <Score score={player.score} />
           </Stage>
         </KeyboardEvents>
@@ -78,7 +82,25 @@ class App extends Component {
     const {
       player: { missiles }
     } = this.props;
+
     return _.map(missiles, missile => {
+      return (
+        <Sprite
+          key={missile.id}
+          width={missileWidth}
+          height={missileHeight}
+          x={missile.x}
+          y={missile.y}
+          filename={"missile.png"}
+        />
+      );
+    });
+  }
+
+  get enemyMissiles() {
+    const { enemyMissiles } = this.props;
+
+    return _.map(enemyMissiles, missile => {
       return (
         <Sprite
           key={missile.id}
@@ -122,6 +144,9 @@ class App extends Component {
     this.props.removeOffScreenEnemies();
     this.props.removeOffscreenMissiles();
     this.props.checkEnemyMissileColisions();
+    this.props.enemiesFire();
+    this.props.enemyMissilesMove();
+    this.props.removeOffScreenEnemyMissiles();
   };
 }
 
@@ -158,13 +183,28 @@ const mapDispatchToProps = dispatch => ({
   },
   checkEnemyMissileColisions: () => {
     dispatch(checkEnemyMissileColisions());
+  },
+  enemiesFire: () => {
+    dispatch(enemiesFire());
+  },
+  enemyMissilesMove: () => {
+    dispatch(enemyMissilesMove());
+  },
+  removeOffScreenEnemyMissiles: () => {
+    dispatch(removeOffScreenEnemyMissiles());
   }
 });
 
-const mapStateToProps = ({ player, pixi: { screen }, enemies }) => ({
+const mapStateToProps = ({
+  player,
+  pixi: { screen },
+  enemies,
+  enemyMissiles
+}) => ({
   player,
   screen,
-  enemies
+  enemies,
+  enemyMissiles
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

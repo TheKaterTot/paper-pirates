@@ -69,6 +69,18 @@ const isColliding = (enemy, missile) => {
   );
 };
 
+export const enemiesFire = () => (dispatch, getState) => {
+  const { enemies } = getState();
+
+  _.each(enemies, enemy => {
+    const roll = _.random(2500);
+
+    if (roll <= 20) {
+      dispatch({ type: "ENEMYFIRE", payload: enemy });
+    }
+  });
+};
+
 export const checkEnemyMissileColisions = () => (dispatch, getState) => {
   const {
     enemies,
@@ -85,5 +97,23 @@ export const checkEnemyMissileColisions = () => (dispatch, getState) => {
         dispatch({ type: "INCREMENTSCORE", payload: { count: 1 } });
       }
     });
+  });
+};
+
+export const enemyMissilesMove = () => (dispatch, getState) => {
+  const { enemyMissiles } = getState();
+
+  _.each(enemyMissiles, missile => {
+    dispatch({ type: "ENEMYMISSILEMOVE", payload: missile });
+  });
+};
+
+export const removeOffScreenEnemyMissiles = () => (dispatch, getState) => {
+  const { enemyMissiles } = getState();
+
+  _.each(enemyMissiles, missile => {
+    if (missile.x <= -missileWidth / 2) {
+      dispatch({ type: "REMOVEENEMYMISSILE", payload: missile });
+    }
   });
 };
