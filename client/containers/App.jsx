@@ -2,23 +2,28 @@ import * as React from "react";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { keydown, keyup } from "../actions/keyboard";
+
 import {
   movePlayer,
   setPosition,
   updateMissiles,
   removeOffscreenMissiles
 } from "../actions/player";
+
 import { setScreenSize } from "../actions/pixi";
+
 import {
   placeInitialEnemies,
   updateEnemies,
-  removeOffScreenEnemies
+  removeOffScreenEnemies,
+  checkEnemyMissileColisions
 } from "../actions/enemy";
 
 import Loop from "./Loop";
 import Stage from "./Stage";
 import Sprite from "../components/Sprite";
 import KeyboardEvents from "./KeyboardEvents";
+import Score from "../components/Score";
 
 import {
   gameBackgroundColor,
@@ -41,10 +46,8 @@ class App extends Component {
   }
 
   render() {
-    const {
-      player: { position },
-      screen
-    } = this.props;
+    const { player, screen } = this.props;
+    const { position } = player;
 
     return (
       <Loop onTick={this.onTick}>
@@ -64,6 +67,7 @@ class App extends Component {
 
             {this.enemies}
             {this.playerMissiles}
+            <Score score={player.score} />
           </Stage>
         </KeyboardEvents>
       </Loop>
@@ -117,6 +121,7 @@ class App extends Component {
     this.props.updateMissiles();
     this.props.removeOffScreenEnemies();
     this.props.removeOffscreenMissiles();
+    this.props.checkEnemyMissileColisions();
   };
 }
 
@@ -150,6 +155,9 @@ const mapDispatchToProps = dispatch => ({
   },
   removeOffscreenMissiles: () => {
     dispatch(removeOffscreenMissiles());
+  },
+  checkEnemyMissileColisions: () => {
+    dispatch(checkEnemyMissileColisions());
   }
 });
 

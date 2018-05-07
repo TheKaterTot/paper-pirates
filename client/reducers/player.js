@@ -12,7 +12,8 @@ const defaultState = {
     right: false,
     left: false
   },
-  missiles: []
+  missiles: [],
+  score: 0
 };
 
 const keyup = (state, key) => {
@@ -116,6 +117,8 @@ const reducer = (state = defaultState, action) => {
       return updateMissiles(state);
     case "KEYPRESS":
       return keypress(state, action.payload.key);
+    case "INCREMENTSCORE":
+      return { ...state, score: state.score + action.payload.count };
     default:
       return state;
   }
