@@ -9,10 +9,18 @@ const updateEnemies = enemies => {
   });
 };
 
+const removeEnemy = (enemies, enemy) => {
+  return _.filter(enemies, e => {
+    return e.id !== enemy.id;
+  });
+};
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case "CREATEENEMY":
       return [...state, action.payload];
+    case "REMOVEENEMY":
+      return removeEnemy(state, action.payload);
     case "UPDATEENEMIES":
       return updateEnemies(state);
     default:

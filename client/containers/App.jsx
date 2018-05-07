@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { keydown, keyup } from "../actions/keyboard";
 import { movePlayer, setPosition } from "../actions/player";
 import { setScreenSize } from "../actions/pixi";
-import { placeInitialEnemies, updateEnemies } from "../actions/enemy";
+import {
+  placeInitialEnemies,
+  updateEnemies,
+  removeOffScreenEnemies
+} from "../actions/enemy";
 
 import Loop from "./Loop";
 import Stage from "./Stage";
@@ -84,6 +88,7 @@ class App extends Component {
   onTick = () => {
     this.props.movePlayer();
     this.props.updateEnemies();
+    this.props.removeOffScreenEnemies();
   };
 }
 
@@ -108,6 +113,9 @@ const mapDispatchToProps = dispatch => ({
   },
   movePlayer: () => {
     dispatch(movePlayer());
+  },
+  removeOffScreenEnemies: () => {
+    dispatch(removeOffScreenEnemies());
   }
 });
 
