@@ -1,10 +1,10 @@
 import _ from "lodash";
 import { placeInitialEnemies } from "./enemy";
+import { gamestart } from "./game";
+import { playerfire } from "./game";
 
 export const fireMissle = _.throttle(dispatch => {
-  dispatch({
-    type: "FIREMISSILE"
-  });
+  dispatch(playerfire());
 }, 500);
 
 export const keydown = key => ({
@@ -19,7 +19,7 @@ export const keyup = key => (dispatch, getState) => {
 
   if (state === "gameover") {
     if (key === "Enter") {
-      dispatch({ type: "GAMESTART" });
+      dispatch(gamestart());
       dispatch(placeInitialEnemies());
       return;
     }
@@ -27,7 +27,7 @@ export const keyup = key => (dispatch, getState) => {
 
   if (state === "title") {
     if (key === "Enter") {
-      dispatch({ type: "GAMESTART" });
+      dispatch(gamestart());
       dispatch(placeInitialEnemies());
       return;
     }

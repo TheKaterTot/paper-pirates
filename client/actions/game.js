@@ -8,3 +8,21 @@ export const gameover = () => (dispatch, getState) => {
   Client.emit("gameover", { score });
   dispatch({ type: "GAMEOVER" });
 };
+
+export const gamestart = () => (dispatch, getState) => {
+  const {
+    game: {}
+  } = getState();
+
+  Client.emit("gamestart");
+  dispatch({ type: "GAMESTART"});
+};
+
+export const playerfire = () => (dispatch, getState) => {
+  const {
+    player: { missiles }
+  } = getState();
+
+  Client.emit("playerfire", { missiles });
+  dispatch({type: "FIREMISSILE"});
+};

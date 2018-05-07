@@ -30,9 +30,27 @@ io.on("connection", socket => {
     console.info("Game Over");
   });
 
-  socket.on("gamestarted", () => {
-    gameID = uuid.v4();
+  socket.on("gamestart", results => {
+    client.writeMeasurement("newGames", [
+      {
+        tags: { sessionID, gameID, event: "newGame" },
+        fields: {
+          newGames: 1,
+        }
+      }
+    ]);
     console.info("Game Started");
+  });
+
+  socket.on("playerfire", results => {
+    client.writeMeasurement("playerFire", [
+      {
+        tags: { sessionID, gameID, event: "playerMissile" },
+        fields: {
+          fires: 1,
+        }
+      }
+    ]);
   });
 });
 
