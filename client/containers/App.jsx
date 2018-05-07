@@ -7,7 +7,8 @@ import {
   movePlayer,
   setPosition,
   updateMissiles,
-  removeOffscreenMissiles
+  removeOffscreenMissiles,
+  checkPlayerAlive
 } from "../actions/player";
 
 import { setScreenSize } from "../actions/pixi";
@@ -188,6 +189,7 @@ class App extends Component {
       return;
     }
 
+    this.props.checkPlayerAlive();
     this.props.movePlayer();
     this.props.updateEnemies();
     this.props.updateMissiles();
@@ -242,6 +244,9 @@ const mapDispatchToProps = dispatch => ({
   },
   removeOffScreenEnemyMissiles: () => {
     dispatch(removeOffScreenEnemyMissiles());
+  },
+  checkPlayerAlive: () => {
+    dispatch(checkPlayerAlive());
   }
 });
 

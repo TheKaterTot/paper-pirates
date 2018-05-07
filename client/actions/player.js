@@ -2,6 +2,9 @@ import {
   playerWidth,
   playerHeight,
   playerSpeed,
+  enemyHeight,
+  enemyWidth,
+  missileHeight,
   missileWidth
 } from "../constants";
 
@@ -69,4 +72,58 @@ export const removeOffscreenMissiles = () => (dispatch, getState) => {
       dispatch({ type: "REMOVEMISSILE", payload: missile });
     }
   });
+};
+
+const checkEnemyCollision = (player, enemy) => {
+  const playerMinX = player.x - playerWidth / 2;
+  const playerMinY = player.y - playerHeight / 2;
+  const playerMaxX = player.x + playerWidth / 2;
+  const playerMaxY = player.y + playerHeight / 2;
+  const enemyMinX = enemy.x - enemyWidth / 2;
+  const enemyMinY = enemy.y - enemyHeight / 2;
+  const enemyMaxX = enemy.x + enemyWidth / 2;
+  const enemyMaxY = enemy.y + enemyHeight / 2;
+
+  return (
+    playerMinX < enemyMaxX &&
+    playerMaxX > enemyMinX &&
+    playerMinY < enemyMaxY &&
+    playerMaxY > enemyMinY
+  );
+};
+
+const checkMissileCollision = (player, missile) => {
+  const missileMinX = missile.x - missileWidth / 2;
+  const missileMinY = missile.y - missileHeight / 2;
+  const missileMaxX = missile.x + missileWidth / 2;
+  const missileMaxY = missile.y + missileHeight / 2;
+  const playerMinX = player.x - playerWidth / 2;
+  const playerMinY = player.y - playerHeight / 2;
+  const playerMaxX = player.x + playerWidth / 2;
+  const playerMaxY = player.y + playerHeight / 2;
+
+  return (
+    missileMinX < playerMaxX &&
+    missileMaxX > playerMinX &&
+    missileMinY < playerMaxY &&
+    missileMaxY > playerMinY
+  );
+};
+
+export const checkPlayerAlive = () => (dispatch, getState) => {
+  const { player, enemies, enemyMissiles } = getState();
+
+  for (let i = 0; i < enemies.length; i++) {
+    if (checkEnemyCollision(player.position, enemies[i])) {
+      dispatch({ type: "GAMEOVER" });
+      return;
+    }
+  }
+
+  for (let i = 0; i < enemyMissiles.length; i++) {
+    if (checkMissileCollision(player.position, enemyMissiles[i])) {
+      dispatch({ type: "GAMEOVER" });
+      return;
+    }
+  }
 };
