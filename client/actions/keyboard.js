@@ -25,6 +25,14 @@ export const keyup = key => (dispatch, getState) => {
     }
   }
 
+  if (state === "title") {
+    if (key === "Enter") {
+      dispatch({ type: "GAMESTART" });
+      dispatch(placeInitialEnemies());
+      return;
+    }
+  }
+
   if (state === "playing") {
     if (key === " ") {
       return fireMissle(dispatch);

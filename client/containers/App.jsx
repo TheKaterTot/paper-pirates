@@ -69,9 +69,37 @@ class App extends Component {
         return this.playingScene;
       case "gameover":
         return this.gameoverScene;
+      case "title":
+        return this.titleScene;
       default:
         return null;
     }
+  }
+
+  get titleScene() {
+    const { screen } = this.props;
+
+    return (
+      <Stage
+        backgroundColor={0x000000}
+        width={screen.width}
+        height={screen.height}
+      >
+        <Text
+          text={
+            "Paper Pirates!\n\nProtect your harbor\n and\n avoid missiles\n\nPress Enter to Start"
+          }
+          x={screen.width / 2}
+          y={screen.height / 2}
+          style={{
+            fill: 0xffffff,
+            stroke: 0xffffff,
+            fontSize: "56pt",
+            align: "center"
+          }}
+        />
+      </Stage>
+    );
   }
 
   get gameoverScene() {

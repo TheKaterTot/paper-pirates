@@ -1,5 +1,5 @@
 const defaultState = {
-  state: "gameover"
+  state: "title"
 };
 
 export default (state = defaultState, action) => {
