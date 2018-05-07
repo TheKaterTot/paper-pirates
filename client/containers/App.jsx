@@ -2,7 +2,12 @@ import * as React from "react";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { keydown, keyup } from "../actions/keyboard";
-import { movePlayer, setPosition } from "../actions/player";
+import {
+  movePlayer,
+  setPosition,
+  updateMissiles,
+  removeOffscreenMissiles
+} from "../actions/player";
 import { setScreenSize } from "../actions/pixi";
 import {
   placeInitialEnemies,
@@ -23,7 +28,9 @@ import {
   enemyHeight,
   enemyWidth,
   screenHeight,
-  screenWidth
+  screenWidth,
+  missileWidth,
+  missileHeight
 } from "../constants";
 
 class App extends Component {
@@ -56,10 +63,29 @@ class App extends Component {
             />
 
             {this.enemies}
+            {this.playerMissiles}
           </Stage>
         </KeyboardEvents>
       </Loop>
     );
+  }
+
+  get playerMissiles() {
+    const {
+      player: { missiles }
+    } = this.props;
+    return _.map(missiles, missile => {
+      return (
+        <Sprite
+          key={missile.id}
+          width={missileWidth}
+          height={missileHeight}
+          x={missile.x}
+          y={missile.y}
+          filename={"missile.png"}
+        />
+      );
+    });
   }
 
   get enemies() {
@@ -88,7 +114,9 @@ class App extends Component {
   onTick = () => {
     this.props.movePlayer();
     this.props.updateEnemies();
+    this.props.updateMissiles();
     this.props.removeOffScreenEnemies();
+    this.props.removeOffscreenMissiles();
   };
 }
 
@@ -116,6 +144,12 @@ const mapDispatchToProps = dispatch => ({
   },
   removeOffScreenEnemies: () => {
     dispatch(removeOffScreenEnemies());
+  },
+  updateMissiles: () => {
+    dispatch(updateMissiles());
+  },
+  removeOffscreenMissiles: () => {
+    dispatch(removeOffscreenMissiles());
   }
 });
 

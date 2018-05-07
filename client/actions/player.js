@@ -1,4 +1,9 @@
-import { playerWidth, playerHeight, playerSpeed } from "../constants";
+import {
+  playerWidth,
+  playerHeight,
+  playerSpeed,
+  missileWidth
+} from "../constants";
 
 const isPlayerInBounds = (x, y, screen) => {
   const maxX = x + playerWidth / 2;
@@ -47,4 +52,21 @@ export const movePlayer = () => (dispatch, getState) => {
   }
 
   dispatch(setPosition(newX, newY));
+};
+
+export const updateMissiles = () => ({
+  type: "UPDATEMISSILES"
+});
+
+export const removeOffscreenMissiles = () => (dispatch, getState) => {
+  const {
+    pixi: { screen },
+    player: { missiles }
+  } = getState();
+
+  _.each(missiles, missile => {
+    if (missile.x > screen.width + missileWidth / 2) {
+      dispatch({ type: "REMOVEMISSILE", payload: missile });
+    }
+  });
 };
