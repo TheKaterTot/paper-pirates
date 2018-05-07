@@ -6,6 +6,7 @@ import PixiReducer from "./reducers/pixi";
 import EnemiesReducer from "./reducers/enemies";
 import EnemiesMissilesReducer from "./reducers/enemyMissiles";
 import GameReducer from "./reducers/game";
+import * as client from "./client";
 
 import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware } from "redux";

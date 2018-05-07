@@ -4,6 +4,12 @@ const fs = require("fs");
 const express = require("express");
 
 const app = express();
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+
+io.on("connection", () => {
+  console.info("client connected");
+});
 
 // Serve static assets
 const staticMiddleware = express.static(path.join(__dirname, "public"));
@@ -19,6 +25,6 @@ app.get("/", (req, res) => {
 });
 
 const port = _.get(process.env, "PORT", 4000);
-app.listen(port, () => {
+server.listen(port, () => {
   console.info(`Now listening on port ${port}`);
 });
