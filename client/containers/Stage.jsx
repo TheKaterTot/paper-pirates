@@ -7,11 +7,19 @@ class Stage extends Component {
   constructor(props) {
     super(props);
     const { backgroundColor } = this.props;
-    this.application = new PIXI.Application(800, 600, {
-      antialias: true,
-      backgroundColor
-    });
+    this.application = new PIXI.Application(
+      this.props.width,
+      this.props.height,
+      {
+        antialias: true,
+        backgroundColor
+      }
+    );
     this.onRef = this.onRef.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.application.renderer.resize(this.props.width, this.props.height);
   }
 
   render() {

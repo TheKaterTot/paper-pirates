@@ -2,27 +2,48 @@ import * as React from "react";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { keydown, keyup, setPosition } from "../actions/keyboard";
+import { setScreenSize } from "../actions/pixi";
 
 import Loop from "./Loop";
 import Stage from "./Stage";
 import Sprite from "../components/Sprite";
 import KeyboardEvents from "./KeyboardEvents";
 
+import {
+  gameBackgroundColor,
+  playerHeight,
+  playerWidth,
+  playerSpeed,
+  screenHeight,
+  screenWidth
+} from "../constants";
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.props.setScreenSize(screenWidth, screenHeight);
+  }
+
   render() {
     const {
-      player: { position }
+      player: { position },
+      screen
     } = this.props;
 
     return (
       <Loop onTick={this.onTick}>
         <KeyboardEvents onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp}>
-          <Stage backgroundColor={0x6495ed}>
+          <Stage
+            backgroundColor={gameBackgroundColor}
+            width={screen.width}
+            height={screen.height}
+          >
             <Sprite
+              width={playerWidth}
+              height={playerHeight}
               x={position.x}
               y={position.y}
               filename={"player.png"}
-              scale={0.15}
             />
           </Stage>
         </KeyboardEvents>
@@ -43,7 +64,7 @@ class App extends Component {
   };
 
   movePlayer() {
-    const speed = 0.9;
+    const speed = playerSpeed;
     const {
       player: { position, directions }
     } = this.props;
@@ -78,11 +99,15 @@ const mapDispatchToProps = dispatch => ({
   },
   setPosition: (x, y) => {
     dispatch(setPosition(x, y));
+  },
+  setScreenSize: (width, height) => {
+    dispatch(setScreenSize(width, height));
   }
 });
 
-const mapStateToProps = ({ player }) => ({
-  player
+const mapStateToProps = ({ player, pixi: { screen } }) => ({
+  player,
+  screen
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -7,21 +7,23 @@ import WithPixi from "../decorators/WithPixi";
 class Sprite extends Component {
   constructor(props) {
     super(props);
-    const { filename, x, y, scale } = this.props;
+    const { filename, x, y, height, width } = this.props;
 
     this.pixiSprite = PIXI.Sprite.fromImage(`/public/images/${filename}`);
     this.pixiSprite.anchor.set(0.5);
     this.pixiSprite.x = x;
     this.pixiSprite.y = y;
-    this.pixiSprite.scale.set(scale);
+    this.pixiSprite.height = height;
+    this.pixiSprite.width = width;
   }
 
   componentDidUpdate() {
-    const { x, y, scale } = this.props;
+    const { x, y, height, width } = this.props;
 
     this.pixiSprite.x = x;
     this.pixiSprite.y = y;
-    this.pixiSprite.scale.set(scale);
+    this.pixiSprite.height = height;
+    this.pixiSprite.width = width;
   }
 
   componentDidMount() {
