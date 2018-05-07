@@ -6,6 +6,7 @@ import {
   missileWidth,
   missileHeight
 } from "../constants";
+import { gameover } from "./game";
 
 const numberOfEnemies = 4;
 
@@ -48,7 +49,7 @@ export const removeOffScreenEnemies = () => (dispatch, getState) => {
 
     if (enemy.x < 0) {
       dispatch({ type: "REMOVEENEMY", payload: enemy });
-      dispatch({ type: "GAMEOVER" });
+      dispatch(gameover());
     }
   }
 };

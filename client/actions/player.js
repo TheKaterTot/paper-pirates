@@ -7,6 +7,7 @@ import {
   missileHeight,
   missileWidth
 } from "../constants";
+import { gameover } from "./game";
 
 const isPlayerInBounds = (x, y, screen) => {
   const maxX = x + playerWidth / 2;
@@ -115,14 +116,14 @@ export const checkPlayerAlive = () => (dispatch, getState) => {
 
   for (let i = 0; i < enemies.length; i++) {
     if (checkEnemyCollision(player.position, enemies[i])) {
-      dispatch({ type: "GAMEOVER" });
+      dispatch(gameover());
       return;
     }
   }
 
   for (let i = 0; i < enemyMissiles.length; i++) {
     if (checkMissileCollision(player.position, enemyMissiles[i])) {
-      dispatch({ type: "GAMEOVER" });
+      dispatch(gameover());
       return;
     }
   }
