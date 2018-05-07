@@ -43,12 +43,14 @@ export const removeOffScreenEnemies = () => (dispatch, getState) => {
     pixi: { screen }
   } = getState();
 
-  _.each(enemies, enemy => {
-    if (enemy.x < -enemyWidth / 2) {
+  for (let i = 0; i < enemies.length; i++) {
+    const enemy = enemies[i];
+
+    if (enemy.x < 0) {
       dispatch({ type: "REMOVEENEMY", payload: enemy });
-      dispatch({ type: "CREATEENEMY", payload: createEnemy(screen) });
+      dispatch({ type: "GAMEOVER" });
     }
-  });
+  }
 };
 
 const isColliding = (enemy, missile) => {

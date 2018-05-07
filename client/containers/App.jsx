@@ -75,7 +75,10 @@ class App extends Component {
   }
 
   get gameoverScene() {
-    const { screen } = this.props;
+    const {
+      screen,
+      player: { score }
+    } = this.props;
 
     return (
       <Stage
@@ -94,6 +97,7 @@ class App extends Component {
             align: "center"
           }}
         />
+        <Score key={"score"} score={score} />
       </Stage>
     );
   }
