@@ -4,20 +4,25 @@ const _ = require("lodash");
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
+const influxExpress = require("influx-express");
 
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 require("dotenv").config()
-//const client = new influx.InfluxDB("http://localhost:8086/paperpirates")
 
-const client = new influx.InfluxDB({
+const influxOptions = {
   database: "paperpirates",
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   protocol: "https"
-})
+}
+
+app.use(influxExpress(influxOptions));
+
+const client = new influx.InfluxDB(influxOptions)
 
 io.on("connection", socket => {
   console.info("client connected");
