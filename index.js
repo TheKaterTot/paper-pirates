@@ -8,8 +8,16 @@ const express = require("express");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
+require("dotenv").config()
+//const client = new influx.InfluxDB("http://localhost:8086/paperpirates")
 
-const client = new influx.InfluxDB("http://localhost:8086/paperpirates");
+const client = new influx.InfluxDB({
+  database: "paperpirates",
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  host: process.env.DB_HOST,
+  protocol: "https"
+})
 
 io.on("connection", socket => {
   console.info("client connected");
@@ -18,7 +26,7 @@ io.on("connection", socket => {
   let gameID = -1;
 
   socket.on("gameover", results => {
-    client.writeMeasurement("deaths", [
+    client.writeMeasurement("events", [
       {
         tags: { sessionID, gameID, event: "death" },
         fields: {
@@ -31,7 +39,8 @@ io.on("connection", socket => {
   });
 
   socket.on("gamestart", results => {
-    client.writeMeasurement("newGames", [
+    gameID = uuid.v4();
+    client.writeMeasurement("events", [
       {
         tags: { sessionID, gameID, event: "newGame" },
         fields: {
@@ -43,7 +52,7 @@ io.on("connection", socket => {
   });
 
   socket.on("playerfire", results => {
-    client.writeMeasurement("playerFire", [
+    client.writeMeasurement("events", [
       {
         tags: { sessionID, gameID, event: "playerMissile" },
         fields: {
