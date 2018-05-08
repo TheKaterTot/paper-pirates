@@ -6,6 +6,7 @@ import {
   missileWidth,
   missileHeight
 } from "../constants";
+import Client from "../client";
 import { gameover } from "./game";
 
 const numberOfEnemies = 4;
@@ -79,6 +80,7 @@ export const enemiesFire = () => (dispatch, getState) => {
     const roll = _.random(4000);
 
     if (roll <= 20) {
+      Client.emit("enemyfire", { enemyID: enemy.id })
       dispatch({ type: "ENEMYFIRE", payload: enemy });
     }
   });

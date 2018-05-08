@@ -61,6 +61,17 @@ io.on("connection", socket => {
       }
     ]);
   });
+
+  socket.on("enemyfire", results => {
+    client.writeMeasurement("events", [
+      {
+        tags: { sessionID, gameID, enemyID: results.enemyID, event: "enemyMissile" },
+        fields: {
+          enemyFires: 1,
+        }
+      }
+    ])
+  })
 });
 
 // Serve static assets
