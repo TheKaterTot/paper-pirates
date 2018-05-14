@@ -19,8 +19,12 @@ class Stage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    this.application.renderer.resize(this.props.width, this.props.height);
-    this.application.renderer.backgroundColor = this.props.backgroundColor;
+    const {width, height, backgroundColor} = this.props;
+
+    this.application.renderer.view.style.width = `${width}px`;
+    this.application.renderer.view.style.height = `${height}px`;
+    this.application.renderer.resize(width, height);
+    this.application.renderer.backgroundColor = backgroundColor;
   }
 
   render() {

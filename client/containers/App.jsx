@@ -45,11 +45,48 @@ import {
   titleHeight
 } from "../constants";
 
+const getSize = (ratio) => {
+  let width;
+  let height;
+ 
+  if (window.innerWidth / window.innerHeight >= ratio) {
+    width = window.innerHeight * ratio;
+    height = window.innerHeight;
+  } else {
+    width = window.innerWidth;
+    height = window.innerWidth / ratio;
+  }
+
+  return {width, height};
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
-    this.props.setScreenSize(screenWidth, screenHeight);
+
+    const ratio = screenWidth / screenHeight;
+    const {width, height} = getSize(ratio);
+
+    this.props.setScreenSize(width, height);
     this.props.placeInitialEnemies();
+
+    this.state = { width, height };
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.onResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.onResize);
+  }
+
+  onResize = () => {
+    const ratio = screenWidth / screenHeight;
+    const {width, height} = getSize(ratio);
+
+    this.setState({ width, height });
+    this.props.setScreenSize(width, height);
   }
 
   render() {
@@ -84,8 +121,8 @@ class App extends Component {
     return (
       <Stage
         backgroundColor={gameBackgroundColor}
-        width={screen.width}
-        height={screen.height}
+        width={this.state.width}
+        height={this.state.height}
       >
         <Sprite
           width={titleWidth}
@@ -120,8 +157,8 @@ class App extends Component {
     return (
       <Stage
         backgroundColor={0x000000}
-        width={screen.width}
-        height={screen.height}
+        width={this.state.width}
+        height={this.state.height}
       >
         <Text
           text={"Game Over\nPress Enter to Start Over"}
@@ -146,8 +183,8 @@ class App extends Component {
     return (
       <Stage
         backgroundColor={gameBackgroundColor}
-        width={screen.width}
-        height={screen.height}
+        width={this.state.width}
+        height={this.state.height}
       >
         <Sprite
           key={"player"}
