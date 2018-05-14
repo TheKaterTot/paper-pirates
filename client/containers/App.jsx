@@ -40,7 +40,9 @@ import {
   screenHeight,
   screenWidth,
   missileWidth,
-  missileHeight
+  missileHeight,
+  titleWidth,
+  titleHeight
 } from "../constants";
 
 class App extends Component {
@@ -81,20 +83,27 @@ class App extends Component {
 
     return (
       <Stage
-        backgroundColor={0x000000}
+        backgroundColor={gameBackgroundColor}
         width={screen.width}
         height={screen.height}
       >
+        <Sprite
+          width={titleWidth}
+          height={titleHeight}
+          x={screen.width / 2}
+          y={screen.height / 2 - titleHeight}
+          filename={"paper-pirates.png"}
+        />
         <Text
           text={
-            "Paper Pirates!\n\nProtect your harbor\n and\n avoid missiles\n\nPress Enter to Start"
+            `Protect your harbor and avoid missiles\nUse the arrow keys to navigate\nPress Space to fire\n\nPress Enter to Start`
           }
           x={screen.width / 2}
-          y={screen.height / 2}
+          y={screen.height / 2 + titleHeight / 2}
           style={{
-            fill: 0xffffff,
+            fill: 0x000000,
             stroke: 0xffffff,
-            fontSize: "56pt",
+            fontSize: "30pt",
             align: "center"
           }}
         />

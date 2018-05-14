@@ -1,12 +1,14 @@
 export const playerWidth = 284 * 0.5;
 export const playerHeight = 207 * 0.5;
-export const playerSpeed = 2.5;
+export const playerSpeed = 3.0;
 export const missileSpeed = playerSpeed * 2;
 export const screenWidth = 1024;
 export const screenHeight = 768;
 export const gameBackgroundColor = 0x6495ed;
 export const enemyWidth = 289 * 0.5;
 export const enemyHeight = 279 * 0.5;
-export const enemySpeed = playerSpeed;
+export const enemySpeed = playerSpeed * 0.75;
 export const missileWidth = 281 * 0.25;
 export const missileHeight = 258 * 0.25;
+export const titleWidth = 518;
+export const titleHeight = 250;
