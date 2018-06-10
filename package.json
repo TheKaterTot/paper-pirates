@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "npm install && node index.js",
     "dev": "webpack -w --config webpack.prod.js",
     "postinstall": "webpack --config webpack.prod.js"
   },
