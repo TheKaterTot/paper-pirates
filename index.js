@@ -92,7 +92,7 @@ app.get("/", (req, res) => {
   fs.createReadStream(path.join(__dirname, "views", "index.html")).pipe(res);
 });
 
-const port = _.get(process.env, "PORT", 4000);
+const port = _.get(process.env, "PORT", 8080);
 server.listen(port, () => {
   console.info(`Now listening on port ${port}`);
 });
