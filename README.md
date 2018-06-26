@@ -14,18 +14,18 @@
 Follow steps 1-4 above. To set up a local instance of the InfluxData platform to monitor the game, you'll need to install at
 least InfluxDB (and Chronograf or a similar visualization tool if you want to visualize your data).
 
-In index.js:
+Paper Pirates uses the official node.js client library for InfluxDB, so more config options can be found in that documentation.
+
+In index.js, you can change the influxOptions to something like this:
 ```
 const influxOptions = {
   database: "paperpirates",
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  username: tater,
+  password: supersecret,
+  host: 127.0.0.1,
+  port: 8086,
   protocol: "https"
 }
 ```
-
-Change the database details to match your desired InfluxDB instance. 
 
 Play the game and watch the metrics roll in.
