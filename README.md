@@ -1,4 +1,4 @@
-# paper-pirates
+![alt text](https://user-images.githubusercontent.com/1721599/41928119-00d646ba-7929-11e8-953d-693a6f7ad327.png)
 
 ## Welcome to Paper Pirates
 
