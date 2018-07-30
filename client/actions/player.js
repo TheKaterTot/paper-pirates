@@ -78,11 +78,11 @@ export const removeOffscreenMissiles = () => (dispatch, getState) => {
 const checkEnemyCollision = (player, enemy) => {
   const scale = 0.80
   const playerMinX = player.x - (playerWidth / 2) * scale;
-  const playerMinY = player.y - (playerHeight / 2) * scale;
+  const playerMinY = player.y - (playerHeight /2) * 0.1;
   const playerMaxX = player.x + (playerWidth / 2) * scale;
   const playerMaxY = player.y + (playerHeight / 2) * scale;
   const enemyMinX = enemy.x - (enemyWidth / 2) * scale;
-  const enemyMinY = enemy.y - (enemyHeight / 2) * scale;
+  const enemyMinY = enemy.y - (enemyHeight / 2) * 0.1;
   const enemyMaxX = enemy.x + (enemyWidth / 2) * scale;
   const enemyMaxY = enemy.y + (enemyHeight / 2) * scale;
 
@@ -100,7 +100,7 @@ const checkMissileCollision = (player, missile) => {
   const missileMaxX = missile.x + missileWidth / 2;
   const missileMaxY = missile.y + missileHeight / 2;
   const playerMinX = player.x - playerWidth / 2;
-  const playerMinY = player.y - playerHeight / 2;
+  const playerMinY = player.y;
   const playerMaxX = player.x + playerWidth / 2;
   const playerMaxY = player.y + playerHeight / 2;
 
