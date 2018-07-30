@@ -30,6 +30,7 @@ class Sprite extends Component {
     const { parent } = this.props;
 
     parent.addChild(this.pixiSprite);
+    this.pixiSprite.parentLayer = parent
   }
 
   componentWillUnmount() {

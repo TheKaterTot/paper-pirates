@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as PIXI from "pixi.js";
+require("pixi-layers");
 import { Component } from "react";
 import PixiContext from "../contexts/pixi";
 
@@ -15,7 +16,13 @@ class Stage extends Component {
         backgroundColor
       }
     );
+    const stage = new PIXI.display.Stage();
+    stage.group.enableSort = true;
+    this.application.stage = stage;
     this.onRef = this.onRef.bind(this);
+    stage.group.on('sort', (sprite) => {
+      sprite.zOrder = -sprite.y
+    })
   }
 
   componentDidUpdate(prevProps) {
