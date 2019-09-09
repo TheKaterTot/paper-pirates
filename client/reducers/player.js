@@ -1,5 +1,6 @@
 import uuid from "uuid";
 import { playerWidth, missileSpeed } from "../constants";
+import _ from "lodash";
 
 const defaultState = {
   position: {

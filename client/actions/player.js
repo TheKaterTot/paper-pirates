@@ -8,6 +8,7 @@ import {
   missileWidth
 } from "../constants";
 import { gameover } from "./game";
+import _ from "lodash";
 
 const isPlayerInBounds = (x, y, screen) => {
   const maxX = x + playerWidth / 2;
