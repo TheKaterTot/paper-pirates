@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as React from "react";
 import { Component } from "react";
 import { connect } from "react-redux";
@@ -69,7 +70,10 @@ class App extends Component {
 
     this.props.setScreenSize(width, height);
     this.props.placeInitialEnemies();
-
+    this.onResize = this.onResize.bind(this);
+    this.onTick = this.onTick.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
     this.state = { width, height };
   }
 
@@ -81,7 +85,7 @@ class App extends Component {
     window.removeEventListener("resize", this.onResize);
   }
 
-  onResize = () => {
+  onResize() {
     const ratio = screenWidth / screenHeight;
     const {width, height} = getSize(ratio);
 
@@ -253,15 +257,15 @@ class App extends Component {
     });
   }
 
-  onKeyUp = e => {
+  onKeyUp(e) {
     this.props.keyup(e.key);
   };
 
-  onKeyDown = e => {
+  onKeyDown(e) {
     this.props.keydown(e.key);
   };
 
-  onTick = () => {
+  onTick() {
     const { game } = this.props;
     if (game.state !== "playing") {
       return;
