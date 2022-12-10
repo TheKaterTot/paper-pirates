@@ -15,7 +15,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "dotenv": "^5.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "influx": "^5.4.1",
     "influx-express": "^0.1.1",
     "lodash": "^4.17.15",
